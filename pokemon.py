@@ -50,13 +50,14 @@ pokemon_number = st.slider("Pick a pokemon",
 
 name, height, weight, moves, image_url, audio_url = get_details(pokemon_number)
 height = height * 10
+weight = weight / 10
 
 
 height_data = pd.DataFrame({'Pokemon': ['Weedle', name.title(), 'lapras'],
                'Heights': [30, height, 250]})
 
 
-colors = ['purple', 'red', 'orange']
+colors = ['blue', 'indigo', 'purple']
 
 graph = sns.barplot(data = height_data,
                     x = 'Pokemon',
@@ -66,17 +67,18 @@ graph = sns.barplot(data = height_data,
 col1, col2, col3, = st.columns(3)
 
 with col1:
-	st.write('Image:')
 	st.image(image_url, caption='Pokemon Image', use_column_width=True)
 
 with col2:
-      st.subheader(f'Name: {name.title()}')
-      st.subheader(f'Height: {height}')
-      st.subheader(f'Weight: {weight}')
+      st.header(name.title())
+      st.divider()
+      st.subheader(f'Height: {height} cm') 
+      st.subheader(f'Weight: {weight} kg')
       st.subheader(f'Move Count: {moves}')
 with col3:
-      st.subheader('Battle Cry: ')
+      st.header('Battle Cry: ')
+      st.divider()
       st.audio(audio_url, format = 'audio/ogg')
 
-
+st.divider()
 st.pyplot(graph.figure)
