@@ -35,7 +35,8 @@ def get_details(poke_number):
         url = f'https://pokeapi.co/api/v2/pokemon/{poke_number}/'
         response = requests.get(url)
         pokemon = response.json()
-        return pokemon['name'], pokemon['height'], pokemon['weight'], len(pokemon['moves']), pokemon['sprites']['front_default'], [pokemon['cries']['latest']]
+        audio_url = pokemon['cries']['latest']
+        return pokemon['name'], pokemon['height'], pokemon['weight'], len(pokemon['moves']), pokemon['sprites']['front_default'], audio_url
     except:
         return 'Error', np.NAN, np.NAN, np.NAN, 'default_image_url', 
 
@@ -73,6 +74,7 @@ st.write(f'Name: {name.title()}')
 st.write(f'Height: {height}')
 st.write(f'Weight: {weight}')
 st.write(f'Move Count: {moves}')
+st.audio(audio_url, format = 'audio/ogg')
 
 
 
