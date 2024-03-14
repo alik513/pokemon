@@ -53,8 +53,8 @@ height = height * 10
 weight = weight / 10
 
 
-height_data = pd.DataFrame({'Pokemon': ['Weedle', name.title(), 'lapras'],
-               'Heights': [30, height, 250]})
+height_data = pd.DataFrame({'Pokemon': ['Sobble', name.title(), 'Celesteela'],
+               'Heights': [30, height, 920]})
 
 
 colors = ['blue', 'indigo', 'purple']
@@ -67,7 +67,7 @@ graph = sns.barplot(data = height_data,
 col1, col2, col3, = st.columns(3)
 
 with col1:
-	st.image(image_url, caption='Pokemon Image', use_column_width=True)
+	st.image(image_url, caption= name.title() , use_column_width=True)
 
 with col2:
       st.header(name.title())
@@ -79,6 +79,9 @@ with col3:
       st.header('Battle Cry: ')
       st.divider()
       st.audio(audio_url, format = 'audio/ogg')
+      
+	  
+
 
 st.divider()
 st.pyplot(graph.figure)
