@@ -35,21 +35,17 @@ def get_details(poke_number):
         url = f'https://pokeapi.co/api/v2/pokemon/{poke_number}/'
         response = requests.get(url)
         pokemon = response.json()
-        audio_url = pokemon['cries']['latest']
-        return pokemon['name'], pokemon['height'], pokemon['weight'], len(pokemon['moves']), pokemon['sprites']['front_default'], audio_url
+        return pokemon['name'], pokemon['height'], pokemon['weight'], len(pokemon['moves']), pokemon['sprites']['front_default'], pokemon['cries']['latest']
     except:
-        return 'Error', np.NAN, np.NAN, np.NAN, 'default_image_url', 
+        return 'Error', np.NAN, np.NAN, np.NAN, np.Nan 
 
-    
-def display_image(image_url):
-    if image_url:
-        st.image(image_url, caption='Pokemon Image', use_column_width=True)
+
         
 
 
 pokemon_number = st.slider("Pick a pokemon",
                            min_value = 1,
-                           max_value = 150
+                           max_value = 1025
                            )
 
 name, height, weight, moves, image_url, audio_url = get_details(pokemon_number)
@@ -67,15 +63,20 @@ graph = sns.barplot(data = height_data,
                     y = 'Heights',
                     palette = colors)
 
+col1, col2, col3, = st.columns(3)
 
-st.write('Image:')
-display_image(image_url)
-st.write(f'Name: {name.title()}')
-st.write(f'Height: {height}')
-st.write(f'Weight: {weight}')
-st.write(f'Move Count: {moves}')
-st.audio(audio_url, format = 'audio/ogg')
+with col1:
+	st.write('Image:')
+	st.image(image_url, caption='Pokemon Image', use_column_width=True)
 
+with col2:
+      st.subheader(f'Name: {name.title()}')
+      st.subheader(f'Height: {height}')
+      st.subheader(f'Weight: {weight}')
+      st.subheader(f'Move Count: {moves}')
+with col3:
+      st.subheader('Battle Cry: ')
+      st.audio(audio_url, format = 'audio/ogg')
 
 
 st.pyplot(graph.figure)
